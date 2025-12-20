@@ -5,17 +5,22 @@ import matplotlib.pyplot as plt
 import os
 from scipy.optimize import linear_sum_assignment
 
-# Ensure imgs directory exists
-os.makedirs("imgs", exist_ok=True)
+# Ensure imgs directory exists (using absolute path for consistency)
+base_dir = os.path.dirname(os.path.abspath(__file__))
+img_dir = os.path.join(base_dir, 'imgs')
+os.makedirs(img_dir, exist_ok=True)
 
-src_img = cv2.imread("imgs/source.png") 
-tgt_img = cv2.imread("imgs/target (1).png")
+src_path = os.path.join(img_dir, 'source.png')
+tgt_path = os.path.join(img_dir, 'target (1).png')
+
+src_img = cv2.imread(src_path) 
+tgt_img = cv2.imread(tgt_path)
 
 # Check if images were loaded successfully
 if src_img is None:
-    raise FileNotFoundError("Error: Could not load 'imgs/source.png'. Please add a source image to the imgs directory.")
+    raise IOError(f"Error: Could not load '{src_path}'. Please add a source image to the imgs directory.")
 if tgt_img is None:
-    raise FileNotFoundError("Error: Could not load 'imgs/target (1).png'. Please add a target image to the imgs directory.")
+    raise IOError(f"Error: Could not load '{tgt_path}'. Please add a target image to the imgs directory.")
 
 tgt_img = f.match_aspect_ratio(src_img, tgt_img)
 
