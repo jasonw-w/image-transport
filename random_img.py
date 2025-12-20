@@ -6,6 +6,10 @@ def main():
     # Define paths
     base_dir = os.path.dirname(os.path.abspath(__file__))
     img_dir = os.path.join(base_dir, 'imgs')
+    
+    # Ensure imgs directory exists
+    os.makedirs(img_dir, exist_ok=True)
+    
     target_path = os.path.join(img_dir, 'target (1).png')
     output_path = os.path.join(img_dir, 'random_noise.png')
 
@@ -14,7 +18,8 @@ def main():
     target_img = cv2.imread(target_path)
     
     if target_img is None:
-        print("Error: Could not load target image.")
+        print(f"Error: Could not load target image from {target_path}")
+        print("Please add a 'target (1).png' file to the imgs directory.")
         return
 
     height, width, channels = target_img.shape
