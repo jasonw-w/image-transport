@@ -18,9 +18,9 @@ tgt_img = cv2.imread(tgt_path)
 
 # Check if images were loaded successfully
 if src_img is None:
-    raise IOError(f"Error: Could not load '{src_path}'. Please add a source image to the imgs directory.")
+    raise OSError(f"Error: Could not load '{src_path}'. Please add a source image to the imgs directory.")
 if tgt_img is None:
-    raise IOError(f"Error: Could not load '{tgt_path}'. Please add a target image to the imgs directory.")
+    raise OSError(f"Error: Could not load '{tgt_path}'. Please add a target image to the imgs directory.")
 
 tgt_img = f.match_aspect_ratio(src_img, tgt_img)
 

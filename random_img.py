@@ -18,9 +18,7 @@ def main():
     target_img = cv2.imread(target_path)
     
     if target_img is None:
-        print(f"Error: Could not load target image from {target_path}")
-        print("Please add a 'target (1).png' file to the imgs directory.")
-        return
+        raise OSError(f"Error: Could not load target image from {target_path}. Please add a 'target (1).png' file to the imgs directory.")
 
     height, width, channels = target_img.shape
     print(f"Target dimensions: {width}x{height}, Channels: {channels}")
