@@ -6,6 +6,7 @@ image_transporter is a python script that uses opencv to transport an image to a
 
 obamify demo:
 ![Demo Animation](cat2obama.gif)
+
 kirkification demo:
 ![Demo Animation](random2kirk.gif)
 
@@ -20,13 +21,16 @@ kirkification demo:
 | cell_size      | Number of cells in the grid, higher cell_size = higher quality but slower                                                                        |
 | source_path    | Path to the source image                                                                                                                         |
 | target_path    | Path to the target image                                                                                                                         |
+
 # Contributing
 
 open an issue or pull request if you find any bugs or have any suggestions to improve this program
 
 # How it works
+
 magiccccccccccccccccccccccc
 
 # License
 
+sorry. instead of reducing frame, reduce the size of file, form 800 x 800 to smaller size, since i want to keep the original speed. it has to be less than 100 mb so i can upload to github
 MIT License
