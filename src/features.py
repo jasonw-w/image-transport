@@ -1,0 +1,57 @@
+import cv2
+import numpy as np
+
+def normalize_stats(data):
+    """
+    Normalizes data to a range of [0, 1].
+    """
+    data = np.array(data)
+
+    # Case 1: 1D array (Just brightness)
+    if data.ndim == 1:
+        min_val = np.min(data)
+        max_val = np.max(data)
+        range_val = max_val - min_val
+
+        # Avoid division by zero
+        if range_val == 0:
+            range_val = 1
+
+        return (data - min_val) / range_val
+
+    # Case 2: 2D array (Brightness + Frequency)
+    else:
+        mins = np.min(data, axis=0)
+        maxs = np.max(data, axis=0)
+        range_vals = maxs - mins
+
+        # Avoid division by zero for each column
+        range_vals[range_vals == 0] = 1
+
+        return (data - mins) / range_vals
+
+def compute_brightness(cells):
+    """
+    Computes the brightness of each cell.
+    """
+    averages = []
+    for cell in cells:
+        sum = 0
+        for row in cell:
+            for pixel in row:
+                sum += 0.299*pixel[0] + 0.589*pixel[1] + 0.114*pixel[2]
+        averages.append(sum/(len(cell)*len(row)))
+    return normalize_stats(np.array(averages))
+
+def compute_frequency(cells):
+    """
+    Computes the frequency of each cell.
+    """
+    freqs = []
+    for cell in cells:
+        grey = cv2.cvtColor(cell, cv2.COLOR_RGB2GRAY)
+        laplacian = cv2.Laplacian(grey, cv2.CV_64F)
+        edge_magnitude = np.abs(laplacian)
+        frequency_score = np.mean(edge_magnitude)
+        freqs.append(frequency_score)
+    return(normalize_stats(freqs))
