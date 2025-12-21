@@ -127,6 +127,6 @@ if __name__ == "__main__":
         stretch_factor=0.1, #how much each cell is stretched when accelerated, higher = more stretch
         source_path="demo/imgs/random_noise.png",
         target_path="demo/imgs/kirk.png",
-        cell_size=129, # Number of cells in the grid, higher cell_size = higher quality but slower
+        cell_size=1, # Number of cells in the grid, higher cell_size = higher quality but slower
         quick_gen=False # Whether to use quick generation or not. Quick generation is faster but lower quality
     )
