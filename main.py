@@ -39,10 +39,11 @@ def main(brighness_weight, frequency_weight, distance_weight,
     N = src_img.shape[0] // CELL_SIZE
     M = src_img.shape[1] // CELL_SIZE
 
+    if N < 1 or M < 1:
+        raise ValueError("Cell size is too large. Cell size should be less than or equal to the smaller dimension of the source image.")
     print(f"Grid Size: {N}x{M} = {N*M} cells")
     if N*M > 50000:
         print("WARNING: High cell count detected. This might take a while or crash memory.")
-
     src_cells = image_ops.split(N, M, src_img)
     tgt_cells = image_ops.split(N, M, tgt_img)
 
@@ -126,6 +127,6 @@ if __name__ == "__main__":
         stretch_factor=0.1, #how much each cell is stretched when accelerated, higher = more stretch
         source_path="demo/imgs/random_noise.png",
         target_path="demo/imgs/kirk.png",
-        cell_size=1, # Number of cells in the grid, higher cell_size = higher quality but slower
+        cell_size=129, # Number of cells in the grid, higher cell_size = higher quality but slower
         quick_gen=False # Whether to use quick generation or not. Quick generation is faster but lower quality
     )
