@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore generated files generally
+*.mp4
+matches_cache.npy
+
+# Ignore NPY data caches
+*.npy
+
+# BUT... Do NOT ignore the demos!
+!demo/**/*.npy
+!demo/*.npy
