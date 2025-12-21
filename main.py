@@ -121,7 +121,7 @@ if __name__ == "__main__":
         brighness_weight=1.0,
         frequency_weight=1.0,
         distance_weight=0.01,
-        stiffness=0.01, #how quick each cells moves
+        stiffness=0.005, #how quick each cells moves
         damping=0.98, #how quick each cells slows down
         stretch_factor=0.1, #how much each cell is stretched when accelerated, higher = more stretch
         source_path="demo/imgs/random_noise.png",
