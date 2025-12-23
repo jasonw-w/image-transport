@@ -1,4 +1,5 @@
 import cv2
+import gradio as gr
 import numpy as np
 import os
 import tempfile
@@ -15,7 +16,7 @@ def run_image_transport(
     stretch_factor=0.1,
     cell_size=5,
     quick_gen=True,
-    progress=True
+    progress=gr.Progress()
 ):
     """
     Wrapper function for Gradio demo.
