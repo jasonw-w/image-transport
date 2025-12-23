@@ -1,7 +1,7 @@
 import gradio as gr
 from src.gradio.img_transport_fn import run_image_transport
 
-def transform_images(source_img, target_img, cell_size, quick_gen, brightness_weight, frequency_weight, distance_weight, stiffness, damping, stretch_factor):
+def transform_images(source_img, target_img, cell_percentage, quick_gen, brightness_weight, frequency_weight, distance_weight, stiffness, damping, stretch_factor):
     """Simplified version with fewer parameters"""
     
     if source_img is None or target_img is None:
@@ -17,7 +17,7 @@ def transform_images(source_img, target_img, cell_size, quick_gen, brightness_we
             stiffness=stiffness,
             damping=damping,
             stretch_factor=stretch_factor,
-            cell_size=int(cell_size),
+            cell_percentage=cell_percentage,
             quick_gen=quick_gen,
             progress=None
         )
@@ -33,7 +33,7 @@ demo = gr.Interface(
     inputs=[
         gr.Image(label="Source Image", type="pil"),
         gr.Image(label="Target Image", type="pil"),
-        gr.Slider(1, 20, value=5, step=1, label="Cell Size"),
+        gr.Slider(0.01, 1, value=0.01, step=0.01, label="Cell percentage"),
         gr.Checkbox(value=True, label="Quick Generation"),
         gr.Slider(0.0, 5.0, value=1.0, label="Brightness Weight"),
         gr.Slider(0.0, 5.0, value=1.0, label="Frequency Weight"),

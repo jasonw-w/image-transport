@@ -19,3 +19,4 @@ gradio-env/
 .gradio/
 cache_matches/
 txt.txt
+.env

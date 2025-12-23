@@ -2,7 +2,7 @@ def main(src_fit_target,
          brighness_weight, frequency_weight, distance_weight,
          stiffness, damping, stretch_factor,
          source_path, target_path,
-         cell_size,
+         cell_percentage,
          quick_gen):
     import cv2
     import numpy as np
@@ -18,7 +18,6 @@ def main(src_fit_target,
     # --- CONFIGURATION ---
     SOURCE_PATH = source_path
     TARGET_PATH = target_path
-    CELL_SIZE = cell_size
 
     # Export Settings
     EXPORT_MP4 = True  # Set to True to save animation
@@ -36,12 +35,14 @@ def main(src_fit_target,
     # Resize source to match target aspect/dims
     if src_fit_target:
         src_img = image_ops.match_aspect_ratio(tgt_img, src_img)
+        CELL_SIZE = (src_img.shape[0] * cell_percentage + src_img.shape[1] * cell_percentage) // 2
     else:
         tgt_img = image_ops.match_aspect_ratio(src_img, tgt_img)
-
+        CELL_SIZE = (tgt_img.shape[0] * cell_percentage + tgt_img.shape[1] * cell_percentage) // 2
+    print(f"Cell Size: {CELL_SIZE}")
     # --- 2. GRID SPLITTING ---
-    N = src_img.shape[0] // CELL_SIZE
-    M = src_img.shape[1] // CELL_SIZE
+    N = int(src_img.shape[0] // CELL_SIZE)
+    M = int(src_img.shape[1] // CELL_SIZE)
     plt.imshow(cv2.cvtColor(src_img, cv2.COLOR_BGR2RGB))
     plt.show()
     plt.imshow(cv2.cvtColor(tgt_img, cv2.COLOR_BGR2RGB))
@@ -135,6 +136,6 @@ if __name__ == "__main__":
         stretch_factor=0.01, #how much each cell is stretched when accelerated, higher = more stretch
         source_path="demo/imgs/random_noise.png",
         target_path="demo/imgs/rem.png",
-        cell_size=1, # Size of each cell in pixels. LOWER cell_size = HIGHER quality (more cells), but slower.
+        cell_percentage=0.01, # Size of each cell in pixels. LOWER Percentage = HIGHER quality (more cells), but slower.
         quick_gen=False # Whether to use quick generation or not. Quick generation is faster but lower quality
     )

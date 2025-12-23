@@ -14,9 +14,10 @@ def run_image_transport(
     stiffness=0.005,
     damping=0.98,
     stretch_factor=0.1,
-    cell_size=5,
+    cell_percentage=0.01,
     quick_gen=True,
-    progress=None
+    progress=None,
+    src_fit_target=False
 ):
     """
     Wrapper function for Gradio demo.
@@ -62,11 +63,18 @@ def run_image_transport(
             progress(0.2, desc="Resizing images...")
         
         # Resize source to match target
-        src_img = image_ops.match_aspect_ratio(tgt_img, src_img)
+        if src_fit_target:  
+            src_img = image_ops.match_aspect_ratio(tgt_img, src_img)
+            CELL_SIZE = (src_img.shape[0] * cell_percentage + src_img.shape[1] * cell_percentage) // 2
+        else:
+            tgt_img = image_ops.match_aspect_ratio(src_img, tgt_img)
+            CELL_SIZE = (tgt_img.shape[0] * cell_percentage + tgt_img.shape[1] * cell_percentage) // 2
         
+        print(f"Cell Size: {CELL_SIZE}")    
+
         # Grid splitting
-        N = src_img.shape[0] // cell_size
-        M = src_img.shape[1] // cell_size
+        N = int(src_img.shape[0] // CELL_SIZE)
+        M = int(src_img.shape[1] // CELL_SIZE)
         
         if N < 1 or M < 1:
             raise ValueError("Cell size is too large. Try a smaller value.")
