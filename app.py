@@ -82,7 +82,7 @@ demo = gr.Interface(
         gr.Slider(1, 20, value=1, step=1, label="Cell Size"),
         gr.Checkbox(value=True, label="Quick Generation")
     ],
-    outputs=gr.Gallery(label="Output Animation"),
+    outputs=gr.Image(label="Output Animation"),
     title="Image Morphing Transport",
     description=DESCRIPTION,
     article=ARTICLE
