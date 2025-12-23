@@ -1,5 +1,5 @@
 import gradio as gr
-from src.demo_wrapper import run_image_transport
+from src.gradio.img_transport_fn import run_image_transport
 
 def transform_images(source_img, target_img, cell_size, quick_gen):
     """Simplified version with fewer parameters"""
