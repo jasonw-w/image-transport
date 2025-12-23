@@ -48,8 +48,8 @@ def compress_gif_resize(input_path, output_path, scale=0.9):
         print(f"Error: {e}")
 
 if __name__ == "__main__":
-    INPUT_FILE = "random2kirk.gif"
-    OUTPUT_FILE = "random2kirk.gif"
+    INPUT_FILE = r"C:\Users\User\Documents\Project\obamify\simulation.gif"
+    OUTPUT_FILE = "random2rem.gif"
     
     # Scale 0.7 means 70% of original dimensions (approx 50% file size reduction)
-    compress_gif_resize(INPUT_FILE, OUTPUT_FILE, scale=0.7)
+    compress_gif_resize(INPUT_FILE, OUTPUT_FILE, scale=0.49)

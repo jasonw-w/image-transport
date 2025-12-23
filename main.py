@@ -1,4 +1,5 @@
-def main(brighness_weight, frequency_weight, distance_weight,
+def main(src_fit_target,
+         brighness_weight, frequency_weight, distance_weight,
          stiffness, damping, stretch_factor,
          source_path, target_path,
          cell_size,
@@ -33,12 +34,18 @@ def main(brighness_weight, frequency_weight, distance_weight,
     #cv2.destroyAllWindows()
 
     # Resize source to match target aspect/dims
-    src_img = image_ops.match_aspect_ratio(tgt_img, src_img)
+    if src_fit_target:
+        src_img = image_ops.match_aspect_ratio(tgt_img, src_img)
+    else:
+        tgt_img = image_ops.match_aspect_ratio(src_img, tgt_img)
 
     # --- 2. GRID SPLITTING ---
     N = src_img.shape[0] // CELL_SIZE
     M = src_img.shape[1] // CELL_SIZE
-
+    plt.imshow(cv2.cvtColor(src_img, cv2.COLOR_BGR2RGB))
+    plt.show()
+    plt.imshow(cv2.cvtColor(tgt_img, cv2.COLOR_BGR2RGB))
+    plt.show()
     if N < 1 or M < 1:
         raise ValueError("Cell size is too large. Cell size should be less than or equal to the smaller dimension of the source image.")
     print(f"Grid Size: {N}x{M} = {N*M} cells")
@@ -119,14 +126,15 @@ def main(brighness_weight, frequency_weight, distance_weight,
 
 if __name__ == "__main__":
     main(
+        src_fit_target=False,
         brighness_weight=1.0,
         frequency_weight=1.0,
-        distance_weight=0.01,
-        stiffness=0.005, #how quick each cells moves
+        distance_weight=0.001,
+        stiffness=0.01, #how quick each cells moves
         damping=0.98, #how quick each cells slows down
-        stretch_factor=0.1, #how much each cell is stretched when accelerated, higher = more stretch
+        stretch_factor=0.01, #how much each cell is stretched when accelerated, higher = more stretch
         source_path="demo/imgs/random_noise.png",
-        target_path="demo/imgs/kirk.png",
-        cell_size=1, # Number of cells in the grid, higher cell_size = higher quality but slower
+        target_path="demo/imgs/rem.png",
+        cell_size=1, # Size of each cell in pixels. LOWER cell_size = HIGHER quality (more cells), but slower.
         quick_gen=False # Whether to use quick generation or not. Quick generation is faster but lower quality
     )

@@ -5,10 +5,12 @@ image_transporter is a python script that uses opencv to transport an image to a
 ## Demo
 
 obamify demo:
+
 ![Demo Animation](cat2obama.gif)
 
-kirkification demo:
-![Demo Animation](random2kirk.gif)
+Rem demo:
+
+![Demo Animation](random2rem.gif)
 
 # How to use
 

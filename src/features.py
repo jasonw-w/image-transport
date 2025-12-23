@@ -36,11 +36,14 @@ def compute_brightness(cells):
     """
     averages = []
     for cell in cells:
-        sum = 0
-        for row in cell:
-            for pixel in row:
-                sum += 0.299*pixel[0] + 0.589*pixel[1] + 0.114*pixel[2]
-        averages.append(sum/(len(cell)*len(row)))
+        if cell.size == 0:
+            averages.append(0)
+            continue
+        
+        weighted_sum = np.sum(cell * np.array([0.299, 0.589, 0.114]), axis=(0, 1, 2))
+        avg = weighted_sum / (cell.shape[0] * cell.shape[1])
+        averages.append(avg)
+
     return normalize_stats(np.array(averages))
 
 def compute_frequency(cells):
