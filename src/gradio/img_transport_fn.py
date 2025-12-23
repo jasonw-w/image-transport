@@ -137,7 +137,8 @@ def run_image_transport(
             damping=damping,
             stretch_factor=stretch_factor,
             bg_img=src_img,
-            save_output=output_file
+            save_output=output_file,
+            progress=progress
         )
         
         if progress:

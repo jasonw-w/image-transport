@@ -19,7 +19,7 @@ def transform_images(source_img, target_img, cell_percentage, quick_gen, brightn
             stretch_factor=stretch_factor,
             cell_percentage=cell_percentage,
             quick_gen=quick_gen,
-            progress=None
+            progress=gr.Progress()
         )
         
         return output_path
@@ -33,7 +33,7 @@ demo = gr.Interface(
     inputs=[
         gr.Image(label="Source Image", type="pil"),
         gr.Image(label="Target Image", type="pil"),
-        gr.Slider(0.01, 1, value=0.01, step=0.01, label="Cell percentage"),
+        gr.Slider(0.005, 0.1, value=0.01, step=0.005, label="Cell percentage"),
         gr.Checkbox(value=True, label="Quick Generation"),
         gr.Slider(0.0, 5.0, value=1.0, label="Brightness Weight"),
         gr.Slider(0.0, 5.0, value=1.0, label="Frequency Weight"),
@@ -56,7 +56,7 @@ demo = gr.Interface(
     
     | Parameter | Default | Description |
     | :--- | :--- | :--- |
-    | **Cell Size** | `5` | Resolution of the grid. Smaller = higher detail but slower. |
+    | **Cell Percentage** | `0.01` | how many cells to use(cell_size=(w*cell_percentage+h*cell_percentage)//2). Smaller = higher detail but slower. |
     | **Quick Gen** | `True` | Faster, lower-FPS preview. Uncheck for full 30 FPS. |
     | **Brightness Weight** | `1.0` | Matches brightness/color intensity. |
     | **Frequency Weight** | `1.0` | Matches texture/edges. |

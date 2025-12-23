@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib.collections import EllipseCollection
 
-def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, render_scale=1.0, hold_duration=1.0, stiffness=0.005, damping=0.98, stretch_factor=0.1, bg_img=None, save_output=None):
+def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, render_scale=1.0, hold_duration=1.0, stiffness=0.005, damping=0.98, stretch_factor=0.1, bg_img=None, save_output=None, progress=None):
     """
     Renders particles with Squash & Stretch deformation.
     Optionally saves to 'save_output' path if provided.
@@ -138,7 +138,15 @@ def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, 
         try:
             # Force pillow for GIFs
             writer = 'pillow' if save_output.endswith('.gif') else None
-            anim.save(save_output, fps=fps, writer=writer)
+            
+            # Custom progress callback
+            def progress_callback(current_frame, total_frames_chk):
+                if progress:
+                    # Map rendering progress from 0.7 to 1.0
+                    p = 0.7 + (0.3 * (current_frame / total_frames))
+                    progress(p, desc=f"Rendering frame {current_frame}/{total_frames}")
+
+            anim.save(save_output, fps=fps, writer=writer, progress_callback=progress_callback)
             print(f"Success! Saved to {save_output}")
         except Exception as e:
             print(f"Error saving: {e}")
