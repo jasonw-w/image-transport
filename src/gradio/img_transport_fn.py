@@ -16,7 +16,7 @@ def run_image_transport(
     stretch_factor=0.1,
     cell_size=5,
     quick_gen=True,
-    progress=gr.Progress()
+    progress=None
 ):
     """
     Wrapper function for Gradio demo.
