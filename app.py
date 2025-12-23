@@ -1,7 +1,7 @@
 import gradio as gr
 from src.gradio.img_transport_fn import run_image_transport
 
-def transform_images(source_img, target_img, cell_size, quick_gen):
+def transform_images(source_img, target_img, cell_size, quick_gen, brightness_weight, frequency_weight, distance_weight, stiffness, damping, stretch_factor):
     """Simplified version with fewer parameters"""
     
     if source_img is None or target_img is None:
@@ -11,12 +11,12 @@ def transform_images(source_img, target_img, cell_size, quick_gen):
         output_path = run_image_transport(
             source_image=source_img,
             target_image=target_img,
-            brightness_weight=1.0,
-            frequency_weight=1.0,
-            distance_weight=0.01,
-            stiffness=0.005,
-            damping=0.98,
-            stretch_factor=0.1,
+            brightness_weight=brightness_weight,
+            frequency_weight=frequency_weight,
+            distance_weight=distance_weight,
+            stiffness=stiffness,
+            damping=damping,
+            stretch_factor=stretch_factor,
             cell_size=int(cell_size),
             quick_gen=quick_gen,
             progress=None
@@ -34,7 +34,13 @@ demo = gr.Interface(
         gr.Image(label="Source Image", type="pil"),
         gr.Image(label="Target Image", type="pil"),
         gr.Slider(1, 20, value=5, step=1, label="Cell Size"),
-        gr.Checkbox(value=True, label="Quick Generation")
+        gr.Checkbox(value=True, label="Quick Generation"),
+        gr.Slider(0.0, 5.0, value=1.0, label="Brightness Weight"),
+        gr.Slider(0.0, 5.0, value=1.0, label="Frequency Weight"),
+        gr.Slider(0.0, 0.1, value=0.01, label="Distance Weight"),
+        gr.Slider(0.0, 0.1, value=0.005, label="Stiffness"),
+        gr.Slider(0.8, 1.0, value=0.98, label="Damping"),
+        gr.Slider(0.0, 0.5, value=0.1, label="Stretch Factor")
     ],
     outputs=gr.File(label="Download GIF"),
     title="🎨 Image Transport Demo",
