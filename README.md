@@ -1,6 +1,6 @@
 ---
 title: Image Morphing Transport
-emoji: 🪐
+emoji: 📸
 colorFrom: indigo
 colorTo: purple
 sdk: gradio
