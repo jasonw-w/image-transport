@@ -44,8 +44,24 @@ demo = gr.Interface(
     ],
     outputs=gr.File(label="Download GIF"),
     title="🎨 Image Transport Demo",
-    description="Transform images with animated morphing effects! ",
-    article="Based on obamify.  Upload two images and click submit.",
+    description="Create mesmerizing morphing animations between two images using Optimal Transport. Adjust parameters to control the flow, stiffness, and style of the transformation.",
+    article="""
+    <p style='text-align: center'>Inspired by <a href='https://github.com/jasonw-w/image-transport' target='_blank'>Image Transport</a>. Check out the code and documentation on <a href='https://github.com/jasonw-w/image-transport' target='_blank'>GitHub</a>.</p>
+    
+    <h3>Parameters Guide</h3>
+    <p>Tweaking these values can drastically change the resulting animation.</p>
+    
+    | Parameter | Default | Description |
+    | :--- | :--- | :--- |
+    | **Cell Size** | `5` | Resolution of the grid. Smaller = higher detail but slower. |
+    | **Quick Gen** | `True` | Faster, lower-FPS preview. Uncheck for full 30 FPS. |
+    | **Brightness Weight** | `1.0` | Matches brightness/color intensity. |
+    | **Frequency Weight** | `1.0` | Matches texture/edges. |
+    | **Distance Weight** | `0.01` | Penalty for moving pixels far. Keeps morph local. |
+    | **Stiffness** | `0.005` | Rigidity of the mesh. Higher = solid sheet, Lower = fluid. |
+    | **Damping** | `0.98` | How quickly the animation settles (visual bounciness). |
+    | **Stretch Factor** | `0.1` | How much the mesh can stretch. |
+    """,
     api_name=False
 )
 
