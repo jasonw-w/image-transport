@@ -105,7 +105,7 @@ def main(src_fit_target,
         render_scale = 0.5
         hold_duration = 0.5
         stretch_factor = 0.2
-        duration = 10
+        duration = 20
     else:
         fps = 30
         duration = 20

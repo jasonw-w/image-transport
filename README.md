@@ -1,3 +1,15 @@
+---
+title: Image Morphing Transport
+emoji: 🪐
+colorFrom: indigo
+colorTo: purple
+sdk: gradio
+sdk_version: 5.9.1
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # image_transporter
 
 image_transporter is a python script that uses opencv to transport an image to another image, inspired by the obamify project.

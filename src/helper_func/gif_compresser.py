@@ -52,4 +52,4 @@ if __name__ == "__main__":
     OUTPUT_FILE = "random2rem.gif"
     
     # Scale 0.7 means 70% of original dimensions (approx 50% file size reduction)
-    compress_gif_resize(INPUT_FILE, OUTPUT_FILE, scale=0.49)
+    compress_gif_resize(INPUT_FILE, OUTPUT_FILE, scale=0.8*0.49)
