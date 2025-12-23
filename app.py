@@ -40,8 +40,7 @@ def transform_images(
     damping,
     stretch_factor,
     cell_size,
-    quick_gen,
-    progress=gr.Progress()
+    quick_gen
 ):
     """Gradio interface function"""
     
@@ -59,8 +58,7 @@ def transform_images(
             damping=damping,
             stretch_factor=stretch_factor,
             cell_size=cell_size,
-            quick_gen=quick_gen,
-            progress=progress
+            quick_gen=quick_gen
         )
         
         return output_path
