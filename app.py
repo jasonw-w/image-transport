@@ -38,13 +38,16 @@ demo = gr.Interface(
         gr.Slider(0.0, 5.0, value=1.0, label="Brightness Weight"),
         gr.Slider(0.0, 5.0, value=1.0, label="Frequency Weight"),
         gr.Slider(0.0, 0.1, value=0.01, label="Distance Weight"),
-        gr.Slider(0.0, 0.1, value=0.005, label="Stiffness"),
+        gr.Slider(0.0, 0.1, value=0.015, label="Stiffness"),
         gr.Slider(0.8, 1.0, value=0.98, label="Damping"),
         gr.Slider(0.0, 0.5, value=0.1, label="Stretch Factor")
     ],
     outputs=gr.File(label="Download GIF"),
-    title="🎨 Image Transport Demo",
-    description="Create mesmerizing morphing animations between two images using Optimal Transport. Adjust parameters to control the flow, stiffness, and style of the transformation.",
+    title="Image Transport Demo",
+    description="""
+    Create mesmerizing morphing animations between two images using Optimal Transport. Adjust parameters to control the flow, stiffness, and style of the transformation.
+    \nDon't like your gif or it doesn't show the whole transformation? No worries, they are saved to cache so you can COOK your perfect image transportation.
+    """,
     article="""
     <p style='text-align: center'>Inspired by <a href='https://github.com/jasonw-w/image-transport' target='_blank'>Image Transport</a>. Check out the code and documentation on <a href='https://github.com/jasonw-w/image-transport' target='_blank'>GitHub</a>.</p>
     
