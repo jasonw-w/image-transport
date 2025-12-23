@@ -39,8 +39,9 @@ demo = gr.Interface(
     outputs=gr.File(label="Download GIF"),
     title="🎨 Image Transport Demo",
     description="Transform images with animated morphing effects! ",
-    article="Based on obamify.  Upload two images and click submit."
+    article="Based on obamify.  Upload two images and click submit.",
+    api_name=False
 )
 
 if __name__ == "__main__": 
-    demo.launch()
+    demo.launch(ssr_mode=False)  # At the bottom
