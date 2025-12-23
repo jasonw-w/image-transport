@@ -1,5 +1,6 @@
 numpy
-opencv-python
+opencv-python-headless
 matplotlib
 scipy
-gradio
+gradio==4.44.0
+pillow
