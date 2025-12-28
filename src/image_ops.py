@@ -12,19 +12,17 @@ def match_aspect_ratio(source_img, target_img):
     source_aspect = w_s / h_s
     target_aspect = w_t / h_t
 
-    # 1. Crop Target to match Source Aspect Ratio
     if target_aspect > source_aspect:
-        # Target is too wide: Crop the sides
+
         new_w = int(h_t * source_aspect)
         start_x = (w_t - new_w) // 2
         cropped_target = target_img[:, start_x : start_x + new_w]
     else:
-        # Target is too tall: Crop the top/bottom
+
         new_h = int(w_t / source_aspect)
         start_y = (h_t - new_h) // 2
         cropped_target = target_img[start_y : start_y + new_h, :]
 
-    # 2. Resize to exact Source dimensions (Optional but safer)
     final_target = cv2.resize(cropped_target, (w_s, h_s))
 
     return final_target

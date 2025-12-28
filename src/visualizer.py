@@ -16,12 +16,12 @@ def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, 
     cell_w = W // M
     base_size = max(cell_h, cell_w)
 
-    # Calculate frames
+
     total_frames = int(duration * fps)
     hold_frames = int(hold_duration * fps)
     move_frames = max(0, total_frames - hold_frames)
 
-    # --- 1. PRE-COMPUTE ---
+
     print("Pre-computing particle data...")
     particle_colors = []
     positions = []
@@ -29,12 +29,11 @@ def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, 
     targets = []
 
     for i, p in enumerate(matches):
-        # Target (Destination)
+
         dst_r, dst_c = divmod(i, M)
         target_y = dst_r * cell_h + cell_h // 2
         target_x = dst_c * cell_w + cell_w // 2
 
-        # Start (Source)
         src_idx = p['src_idx'] if isinstance(p, dict) else p
         src_r, src_c = divmod(src_idx, M)
         start_y = src_r * cell_h + cell_h // 2
@@ -44,7 +43,6 @@ def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, 
         targets.append([target_x, target_y])
         velocities.append([0.0, 0.0])
 
-        # Color
         tile = img_cells[src_idx]
         avg_color = tile.mean(axis=(0, 1)).astype(np.uint8)
         particle_colors.append(avg_color)
@@ -54,15 +52,11 @@ def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, 
     tgt = np.array(targets, dtype=np.float32)
     colors = np.array(particle_colors, dtype=np.float32) / 255.0
 
-    # --- 2. SETUP PLOT ---
     print(f"Setting up Squash & Stretch simulation ({len(pos)} particles)...")
     fig, ax = plt.subplots(figsize=(8, 8))
-    
-    # Background Image
+
     if bg_img is not None:
-        # Convert BGR (OpenCV) to RGB (Matplotlib)
         bg_rgb = cv2.cvtColor(bg_img, cv2.COLOR_BGR2RGB)
-        # Use simple imshow for background. 'extent' ensures it covers the same area as our plot coordinates
         ax.imshow(bg_rgb, extent=[0, W, H, 0])
     else:
         ax.set_facecolor('black')
@@ -81,7 +75,6 @@ def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, 
     def update(f):
         nonlocal pos, vel
         
-        # RESET STATE at the start of loop (Critical for Save vs Show)
         if f == 0:
             pos[:] = start_pos[:]
             vel[:] = 0.0
@@ -89,29 +82,23 @@ def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, 
         if f % 10 == 0:
             print(f"Rendering Frame {f}/{total_frames}...")
 
-        # Manual clear for Matplotlib compatibility
         if ax.collections:
             for collection in list(ax.collections):
                 collection.remove()
         
-        # -- PHYSICS --
         if f >= hold_frames:
             diff = tgt - pos
             acc = (diff * STIFFNESS) - (vel * DAMPING)
             vel += acc
             pos += vel
             
-        # -- CALCULATE DEFORMATION --
         speed_sq = np.sum(vel**2, axis=1)
         speed = np.sqrt(speed_sq)
         
-        # Angle of velocity
         angles = np.degrees(np.arctan2(vel[:, 1], vel[:, 0]))
         
-        # Stretch factor
         stretch = 1.0 + (speed * STRETCH_FACTOR)
         
-        # Heavy Overlap to prevent gaps
         OVERLAP = 1.5
         widths  = base_size * stretch * OVERLAP
         heights = (base_size / stretch) * OVERLAP
@@ -129,20 +116,16 @@ def render_obamify_voronoi(matches, img_cells, shape, N, M, fps=30, duration=4, 
         ax.add_collection(ec)
         return ax.collections
 
-    print("Starting playback with deformation...")
+    print("Starting playback with deformation")
     anim = animation.FuncAnimation(fig, update, frames=total_frames, interval=1000//fps, blit=False)
     
     if save_output:
-        print(f"Saving animation to {save_output} (this may take a while)...")
-        # Try-catch to handle missing ffmpeg gracefully
+        print(f"Saving animation to {save_output} (this may take a while)")
         try:
-            # Force pillow for GIFs
             writer = 'pillow' if save_output.endswith('.gif') else None
             
-            # Custom progress callback
             def progress_callback(current_frame, total_frames_chk):
                 if progress:
-                    # Map rendering progress from 0.7 to 1.0
                     p = 0.7 + (0.3 * (current_frame / total_frames))
                     progress(p, desc=f"Rendering frame {current_frame}/{total_frames}")
 

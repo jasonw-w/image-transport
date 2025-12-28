@@ -7,25 +7,21 @@ def normalize_stats(data):
     """
     data = np.array(data)
 
-    # Case 1: 1D array (Just brightness)
     if data.ndim == 1:
         min_val = np.min(data)
         max_val = np.max(data)
         range_val = max_val - min_val
 
-        # Avoid division by zero
         if range_val == 0:
             range_val = 1
 
         return (data - min_val) / range_val
 
-    # Case 2: 2D array (Brightness + Frequency)
     else:
         mins = np.min(data, axis=0)
         maxs = np.max(data, axis=0)
         range_vals = maxs - mins
 
-        # Avoid division by zero for each column
         range_vals[range_vals == 0] = 1
 
         return (data - mins) / range_vals
